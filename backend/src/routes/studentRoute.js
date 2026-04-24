@@ -47,7 +47,7 @@ router.post('/login', async (req, res) => {
         if (!check) return res.send(401).json({ message: "Incorrect Password" });
 
         const token = generateTokenForStudent(student);
-        if (process.env.MODE === "production") {
+        if (process.env.NODE_ENV === "production") {
             return res.cookie("studentToken", token, {
                 maxAge: 3600000, httpOnly: true, secure: true, sameSite: "none", path: "/"
             }).status(200).json({ message: "Login Success!", id: student._id })

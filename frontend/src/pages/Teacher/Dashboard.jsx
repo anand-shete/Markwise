@@ -1,40 +1,39 @@
-import api from "@/api";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
-import { toast } from "sonner";
-import { useSelector, useDispatch } from "react-redux";
-import { setTeacher } from "@/features/teacherSlice";
-import { Loader } from "@/components/common";
-import { Button } from "@/components/ui/button";
-import { setQrCodes } from "@/features/qrCodeSlice";
+import api from '@/api';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
+import { toast } from 'sonner';
+import { useSelector, useDispatch } from 'react-redux';
+import { setTeacher } from '@/features/teacherSlice';
+import { Loader } from '@/components';
+import { Button } from '@/components/ui/button';
+import { setQrCodes } from '@/features/qrCodeSlice';
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from '@/components/ui/table';
 
 export default function Dashboard() {
-  const teacher = useSelector((state) => state.teacher);
-  const qrCodes = useSelector((state) => state.qrCode.qrCodes);
+  const teacher = useSelector(state => state.teacher);
+  const qrCodes = useSelector(state => state.qrCode.qrCodes);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
-  const [qrCodeUrl, setQrCodeUrl] = useState("");
+  const [qrCodeUrl, setQrCodeUrl] = useState('');
 
   useEffect(() => {
     (async () => {
       if (!teacher._id) {
         try {
-          const res = await api.get("/teacher/check-auth");
+          const res = await api.get('/teacher/check-auth');
           dispatch(setTeacher(res.data.teacher));
         } catch (error) {
-          toast(error.response.data.message || "Please Login");
-          navigate("/teacher/login");
+          toast.error(error.response.data.message || 'Please Login');
+          navigate('/teacher/login');
         } finally {
           setLoading(false);
         }
@@ -48,7 +47,7 @@ export default function Dashboard() {
           const arr = response.data;
           dispatch(setQrCodes(arr));
         } catch (error) {
-          console.error("herr Axios error", error);
+          console.error('herr Axios error', error);
         } finally {
           setLoading(false);
         }
@@ -67,7 +66,7 @@ export default function Dashboard() {
       setQrCodeUrl(qrCodeUrl);
       setLoading(false);
     } catch (error) {
-      toast.error("Error Generating QR Code");
+      toast.error('Error Generating QR Code');
     }
   };
 
@@ -76,56 +75,55 @@ export default function Dashboard() {
       setQrCodeUrl(qrCodes[0].qrCodeURL);
     } catch (error) {
       console.error(error);
-      toast.error("Generate QR Code First");
+      toast.error('Generate QR Code First');
     }
   };
+
+  if (loading) return <Loader />;
+
   return (
-    <div className="min-h-[80vh] max-w-screen flex flex-col justify-center items-center ">
-      {loading ? (
-        <Loader />
+    <div className="flex min-h-screen min-w-full flex-col items-center justify-center pt-30">
+      <h1 className="text-2xl font-semibold md:text-4xl">
+        Welcome, {teacher.fullname}!
+      </h1>
+      {qrCodeUrl && <img className="h-[30vh]" src={qrCodeUrl} alt="qrCode" />}
+      <div className="my-10 flex flex-col space-y-4 md:flex-row md:items-stretch md:space-x-10">
+        <Button onClick={generateQRCode}>Generate QR Code</Button>
+        <Button onClick={showQrCode} disabled={qrCodeUrl}>
+          Show Last QR Code
+        </Button>
+        <Button onClick={() => setQrCodeUrl(null)} disabled={!qrCodeUrl}>
+          Hide QR Code
+        </Button>
+      </div>
+      <h1 className="text-md mt-20 mb-10 font-medium md:text-3xl">
+        Attendance History
+      </h1>
+      {qrCodes.length === 0 ? (
+        <p className="text-slate-500">No data to display.</p>
       ) : (
-        <>
-          <h1 className="my-10 text-2xl md:text-5xl font-semibold">
-            Welcome, {teacher.fullname}!
-          </h1>
-          {qrCodeUrl && (
-            <img className="h-[30vh]" src={qrCodeUrl} alt="qrCode" />
-          )}
-          <div className="my-10 flex flex-col md:flex-row justify-evenly items-center md:items-stretch space-y-4 md:space-x-10">
-            <Button onClick={generateQRCode}>Generate QR Code</Button>
-            <Button onClick={showQrCode} disabled={qrCodeUrl}>
-              Show Last QR Code
-            </Button>
-            <Button onClick={() => setQrCodeUrl(null)} disabled={!qrCodeUrl}>
-              Hide QR Code
-            </Button>
-          </div>
-          <h1 className="mt-20 mb-10 font-medium text-md md:text-3xl">
-            Attendance History
-          </h1>
-          <Table className="max-w-[70vw] mx-auto mb-20">
-            <TableHeader>
-              <TableRow className="[&>*]:text-black [&>*]:text-center ">
-                <TableHead>Date</TableHead>
-                <TableHead>Student Name</TableHead>
-                <TableHead>PRN</TableHead>
-                <TableHead className="text-right">Scan Time</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {qrCodes.map((qrCode) =>
-                qrCode.markedByStudents.map((obj, index) => (
-                  <TableRow key={index} className="[&>*]:text-center">
-                    <TableCell>{obj.scanDate}</TableCell>
-                    <TableCell>{obj.student.fullname}</TableCell>
-                    <TableCell>{obj.student.prn}</TableCell>
-                    <TableCell>{obj.scanTime}</TableCell>
-                  </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
-        </>
+        <Table className="mx-auto mb-20 max-w-[70vw]">
+          <TableHeader>
+            <TableRow className="*:text-center *:font-semibold *:text-black">
+              <TableHead>Date</TableHead>
+              <TableHead>Student Name</TableHead>
+              <TableHead>PRN</TableHead>
+              <TableHead className="text-right">Scan Time</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {qrCodes.map(qrCode =>
+              qrCode.markedByStudents.map((obj, index) => (
+                <TableRow key={index} className="*:text-center">
+                  <TableCell>{obj.scanDate}</TableCell>
+                  <TableCell>{obj.student.fullname}</TableCell>
+                  <TableCell>{obj.student.prn}</TableCell>
+                  <TableCell>{obj.scanTime}</TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
       )}
     </div>
   );

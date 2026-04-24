@@ -1,15 +1,9 @@
-import { motion } from "motion/react";
+import { MoonLoader } from 'react-spinners';
 
-export default function Loader() {
-  return (
-    <motion.div
-      className="h-20 w-20 rounded-full border-t-4 border-orange-600 lg:scale-200"
-      animate={{ rotate: 360 }}
-      transition={{
-        duration: 0.5,
-        repeat: Infinity,
-        repeatType: "loop",
-      }}
-    />
-  );
-}
+const Loader = () => (
+  <div className="flex h-screen min-w-full items-center justify-center">
+    <MoonLoader color="#059669"size={80} />
+  </div>
+);
+
+export default Loader;

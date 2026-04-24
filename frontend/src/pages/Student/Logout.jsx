@@ -1,9 +1,10 @@
-import api from "@/api";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
-import { useDispatch } from "react-redux";
-import { clearStudent } from "@/features/studentSlice";
-import { Loader } from "@/components/common";
+import api from '@/api';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { clearStudent } from '@/features/studentSlice';
+import { Loader } from '@/components';
+import { toast } from 'sonner';
 
 export default function Logout() {
   const navigate = useNavigate();
@@ -12,23 +13,15 @@ export default function Logout() {
 
   useEffect(() => {
     api
-      .get("/student/logout")
-      .then((v) => {
+      .get('/student/logout')
+      .then(v => {
         dispatch(clearStudent());
-        setLoading(false);
-        navigate("/");
+        toast.success('Logout successful');
+        navigate('/');
       })
-      .catch((e) => console.error("Axios error:", e));
+      .catch(e => console.error('Axios error:', e))
+      .finally(() => setLoading(false));
   }, [dispatch, navigate]);
 
-  return (
-    <div className="min-h-[80vh] max-w-screen flex flex-col justify-center items-center">
-      {loading && (
-        <>
-          <h1 className="text-2xl my-10">Please wait </h1>
-          <Loader />
-        </>
-      )}
-    </div>
-  );
+  if (loading) return <Loader />;
 }

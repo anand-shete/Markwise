@@ -1,38 +1,37 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import api from "@/api";
-import { Loader } from "@/components/common";
-import { Button } from "@/components/ui/button";
-import { setStudent } from "@/features/studentSlice";
-import { useSelector, useDispatch } from "react-redux";
-import { NavLink, useNavigate } from "react-router";
-import { useState, useEffect } from "react";
-import { toast } from "sonner";
-import { setQrCodes } from "@/features/qrCodeSlice";
+} from '@/components/ui/table';
+import api from '@/api';
+import { Loader } from '@/components';
+import { Button } from '@/components/ui/button';
+import { setStudent } from '@/features/studentSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
+import { useState, useEffect } from 'react';
+import { toast } from 'sonner';
+import { setQrCodes } from '@/features/qrCodeSlice';
 
 export default function Dashboard() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const qrCodes = useSelector((state) => state.qrCode.qrCodes);
+  const qrCodes = useSelector(state => state.qrCode.qrCodes);
   const [loading, setLoading] = useState(true);
-  const student = useSelector((state) => state.student);
+  const student = useSelector(state => state.student);
 
   useEffect(() => {
     (async () => {
       if (!student._id) {
         try {
-          const res = await api.get("/student/check-auth");
+          const res = await api.get('/student/check-auth');
           dispatch(setStudent(res.data.student));
         } catch (error) {
           toast.error(error.response.data.message);
-          navigate("/student/login");
+          navigate('/student/login');
         } finally {
           setLoading(false);
         }
@@ -50,27 +49,28 @@ export default function Dashboard() {
     })();
   }, [dispatch, navigate, student._id]);
 
+  if (loading) return <Loader />;
+
   return (
-    <div className="min-h-screen max-w-screen flex flex-col justify-center items-center">
-      <h1 className="text-2xl font-semibold mb-10">
+    <div className="flex min-h-screen min-w-full flex-col items-center justify-center">
+      <h1 className="mb-10 text-3xl font-semibold">
         Welcome, {student.fullname}!
       </h1>
-      <Button onClick={() => navigate("/student/scan")} className="my-10">
+      <Button onClick={() => navigate('/student/scan')} className="my-10">
         Scan QR Code
       </Button>
 
-      {loading ? (
-        <Loader />
-      ) : (
-        <>
-          <h1 className="mt-10 font-medium text-md md:text-3xl">
-            Attendance History
-          </h1>
-          <Table className="max-w-[70vw] mx-auto mt-5">
+      <>
+        <h1 className="mt-10 text-xl md:text-2xl">Attendance History</h1>
+
+        {qrCodes.length === 0 ? (
+          <p className="my-5 text-slate-500">No data to display.</p>
+        ) : (
+          <Table className="mx-auto mt-10 max-w-[70vw]">
             <TableHeader>
-              <TableRow className="[&>*]:text-black [&>*]:text-center ">
+              <TableRow className="*:text-center *:font-semibold *:text-black">
                 <TableHead>Subject</TableHead>
-                <TableHead className="hidden md:block pt-2">
+                <TableHead className="hidden pt-2 md:block">
                   Teacher Name
                 </TableHead>
                 <TableHead>Date</TableHead>
@@ -78,10 +78,10 @@ export default function Dashboard() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {qrCodes.map((qrCode) => (
-                <TableRow key={qrCode.createdAt} className="[&>*]:text-center">
+              {qrCodes.map(qrCode => (
+                <TableRow key={qrCode.createdAt} className="*:text-center">
                   <TableCell>{qrCode.teacherSubject}</TableCell>
-                  <TableCell className=" hidden md:block pt-2">
+                  <TableCell className="hidden pt-2 md:block">
                     {qrCode.teacherName}
                   </TableCell>
                   <TableCell>{qrCode.markedByStudents[0]?.scanDate}</TableCell>
@@ -90,8 +90,8 @@ export default function Dashboard() {
               ))}
             </TableBody>
           </Table>
-        </>
-      )}
+        )}
+      </>
     </div>
   );
 }
