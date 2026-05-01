@@ -12,10 +12,10 @@ export default function HeroSection() {
         className="absolute h-[90vh] min-w-full object-contain object-center"
       />
       <div className="z-10 mt-20 text-center">
-        <h1 className="text-3xl font-bold tracking-tight text-white md:text-5xl">
+        <h1 className="text-3xl font-bold tracking-tight text-white md:text-4xl xl:text-5xl">
           Welcome to Markwise
         </h1>
-        <p className="mt-5 text-xl text-white opacity-90 md:text-2xl">
+        <p className="mt-5 text-base text-white opacity-90 md:text-xl">
           Scan. Mark. Manage attendance with ease.
         </p>
         <div className="mt-10 *:mx-3">

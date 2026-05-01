@@ -2,9 +2,11 @@ import { NavLink } from 'react-router';
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-black py-6 text-center text-white">
-      <p>© 2026 Markwise. All rights reserved.</p>
-      <div className="mt-2 flex justify-center gap-4">
+    <footer className="w-full bg-black py-10 text-center text-white">
+      <p className="text-base md:text-lg">
+        © 2026 Markwise. All rights reserved.
+      </p>
+      <div className="mt-5 flex justify-center gap-4 text-sm text-slate-300">
         <NavLink
           to="https://github.com/anand-shete/Attendance-Management-System"
           target="_blank"

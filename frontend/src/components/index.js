@@ -6,6 +6,7 @@ import DesktopNavbar from './common/DesktopNavbar';
 import HeroSection from './sections/Landing/HeroSection';
 import DemoSection from './sections/Landing/DemoSection';
 import FeatureSection from './sections/Landing/FeatureSection';
+import CTASection from './sections/Landing/CTASection';
 
 export {
   Navbar,
@@ -16,4 +17,5 @@ export {
   HeroSection,
   DemoSection,
   FeatureSection,
+  CTASection,
 };

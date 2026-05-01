@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
 
 const DesktopNavbar = () => {
@@ -22,11 +22,20 @@ const DesktopNavbar = () => {
   const student = useSelector(state => state.student);
 
   return (
-    <div className="space-x-10">
+    <div className="hidden items-center justify-center space-x-10 md:flex">
+      <div className="text-primary underline-offset-4 hover:underline">
+        <Link
+          to={'https://www.youtube.com/watch?v=q1NrGr6ikPM'}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          How to Use
+        </Link>
+      </div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="link">
-            Student
+            Student 
             <ChevronDown className="pb-1" />
           </Button>
         </DropdownMenuTrigger>

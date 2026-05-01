@@ -52,11 +52,13 @@ export default function Login() {
 
   return (
     <div className="flex min-h-svh min-w-full flex-col items-center justify-center">
-      <Card className="my-20">
+      <Card className="mx-10 my-20 shadow-2xl">
         <CardHeader>
-          <CardTitle className="text-center text-2xl">Login</CardTitle>
-          <CardDescription>
-            Enter your email below to Login as Teacher
+          <CardTitle className="text-center text-xl md:text-2xl">
+            Login
+          </CardTitle>
+          <CardDescription className={'text-center'}>
+            Enter your details to Login as Teacher
           </CardDescription>
         </CardHeader>
         <CardContent>

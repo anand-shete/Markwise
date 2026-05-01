@@ -53,7 +53,7 @@ export default function Dashboard() {
 
   return (
     <div className="flex min-h-screen min-w-full flex-col items-center justify-center">
-      <h1 className="mb-10 text-3xl font-semibold">
+      <h1 className="my-10 text-2xl font-semibold md:text-3xl">
         Welcome, {student.fullname}!
       </h1>
       <Button onClick={() => navigate('/student/scan')} className="my-10">
@@ -61,7 +61,7 @@ export default function Dashboard() {
       </Button>
 
       <>
-        <h1 className="mt-10 text-xl md:text-2xl">Attendance History</h1>
+        <h1 className="mt-10 text-xl">Your Attendance History</h1>
 
         {qrCodes.length === 0 ? (
           <p className="my-5 text-slate-500">No data to display.</p>

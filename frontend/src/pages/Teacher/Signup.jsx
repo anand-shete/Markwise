@@ -65,10 +65,12 @@ export default function Signup() {
 
   return (
     <div className="flex min-h-svh min-w-full flex-col items-center justify-center">
-      <Card className="mt-30">
+      <Card className="mx-10 my-30">
         <CardHeader>
-          <CardTitle className="text-center text-2xl">Signup</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-center text-xl md:text-2xl">
+            Signup
+          </CardTitle>
+          <CardDescription className="text-center">
             Enter details below to register as teacher
           </CardDescription>
         </CardHeader>

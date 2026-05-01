@@ -62,10 +62,12 @@ export default function Signup() {
   }
   return (
     <div className="flex min-h-svh min-w-full flex-col items-center justify-center">
-      <Card className="mt-20">
+      <Card className="mx-10 mt-20">
         <CardHeader>
-          <CardTitle className="text-center text-2xl">Signup</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-center text-xl md:text-2xl">
+            Signup
+          </CardTitle>
+          <CardDescription className="text-center">
             Enter your email below to Signup as Student
           </CardDescription>
         </CardHeader>

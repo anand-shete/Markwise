@@ -96,7 +96,7 @@ export default function Dashboard() {
           Hide QR Code
         </Button>
       </div>
-      <h1 className="text-md mt-20 mb-10 font-medium md:text-3xl">
+      <h1 className="text-base mt-20 mb-10 font-medium md:text-3xl">
         Attendance History
       </h1>
       {qrCodes.length === 0 ? (

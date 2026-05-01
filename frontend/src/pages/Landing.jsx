@@ -2,6 +2,7 @@ import {
   HeroSection,
   FeatureSection,
   DemoSection,
+  CTASection,
 } from '../components';
 
 export default function LandingPage() {
@@ -10,6 +11,7 @@ export default function LandingPage() {
       <HeroSection />
       <DemoSection />
       <FeatureSection />
+      <CTASection />
     </div>
   );
 }

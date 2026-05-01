@@ -104,3 +104,10 @@ This project is licensed under the [MIT License](LICENSE).
 ## Contributing
 
 Contributions are welcome! If you have any suggestions or improvements, feel free to fork the repository and create a pull request.
+
+
+
+## Future Implementation
+- Containerize frontend and backend applications
+- Make UI responsive in client-side
+- Add ShadCN Charts for detailed analysis
